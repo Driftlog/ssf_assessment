@@ -1,5 +1,6 @@
 package vttp2023.batch3.ssf.frontcontroller.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -11,12 +12,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import vttp2023.batch3.ssf.frontcontroller.respositories.AuthenticationRepository;
 
 @Service
 public class AuthenticationService {
 
 	@Value("${RAILWAY_URL}")
 	private String railwayURL;
+
+	@Autowired
+	private AuthenticationRepository repo;	
 	
 
 	// TODO: Task 2
@@ -44,20 +49,22 @@ public class AuthenticationService {
 		if (resp.getStatusCode().is4xxClientError()) {
 			throw new HttpServerErrorException(resp.getStatusCode(), resp.getBody());
 		}
-
-
 	}
 
 	// TODO: Task 3
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to disable a user account for 30 mins
 	public void disableUser(String username) {
+		repo.disableUser(username);
 	}
 
 	// TODO: Task 5
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to check if a given user's login has been disabled
 	public boolean isLocked(String username) {
+		if (repo.isUserDisabled(username)) {
+			return true;
+		}
 		return false;
 	}
 }

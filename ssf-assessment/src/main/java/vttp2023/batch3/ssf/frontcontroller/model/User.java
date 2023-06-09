@@ -20,7 +20,23 @@ public class User {
 
     @Min(0)
     @Max(3)
-    private int loginAttempts;
+    private int loginAttempts = 0;
+
+    private Captcha captcha;
+
+    public void addAttempt() {
+        this.loginAttempts++;
+    }
+    
+
+    public JsonObject toJson() {
+        JsonObject user = Json.createObjectBuilder()
+                    .add("username", this.username)
+                    .add("password", this.password)
+                    .build();
+        
+        return user;
+    }
 
     public String getUsername() {
         return username;
@@ -46,20 +62,25 @@ public class User {
         this.loginAttempts = loginAttempts;
     }
 
-    public void addAttempt() {
-        this.loginAttempts++;
+    public String getCaptchaBody() {
+        return this.getCaptcha().getCaptchaString();
     }
+
+    public double getAnswer() {
+        return this.getCaptcha().getAnswer();
+    }
+
+    public Captcha getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(Captcha captcha) {
+        this.captcha = captcha;
+    }
+
+
+
     
-
-    public JsonObject toJson() {
-        JsonObject user = Json.createObjectBuilder()
-                    .add("username", this.username)
-                    .add("password", this.password)
-                    .build();
-        
-        return user;
-    }
-
     
 
     
