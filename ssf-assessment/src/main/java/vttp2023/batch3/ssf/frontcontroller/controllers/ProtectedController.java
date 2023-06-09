@@ -16,14 +16,14 @@ public class ProtectedController {
 	// TODO Task 5
 	// Write a controller to protect resources rooted under /protected
 
-	// @GetMapping(path="{resourceID}")
-	// public String getResource(@PathVariable(name="resourceID", required = false) String resourceID, 
-	// 				@ModelAttribute("user") final User user) {
-	// 	if (user.isAuthenticated()) {
-	// 		return "view1";
-	// 	} else {
-	// 		return "view0";
-	// 	}
-	// }
+	@GetMapping(path="{resourceID}")
+	public String getResource(@PathVariable(name="resourceID", required = false) String resourceID, 
+					@ModelAttribute("user") final User user) {
+		if (user.isAuthenticated()) {
+			return "view1";
+		} else {
+			return "view0";
+		}
+	}
 
 }
