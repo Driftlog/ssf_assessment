@@ -20,7 +20,7 @@ public class AuthenticationService {
 	// @Value("${RAILWAY_URL}")
 	// private String railwayURL;
 	
-	private String railwayURL = "http://authservice-production-e8b2.up.railway.app";
+	private String railwayURL = "https://authservice-production-e8b2.up.railway.app";
 
 	@Autowired
 	private AuthenticationRepository repo;	
