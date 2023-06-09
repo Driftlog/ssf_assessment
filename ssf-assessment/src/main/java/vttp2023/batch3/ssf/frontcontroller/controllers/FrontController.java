@@ -18,7 +18,7 @@ import vttp2023.batch3.ssf.frontcontroller.services.AuthenticationService;
 public class FrontController {
 
 	@Autowired
-	private AuthenticationService authenticationService;
+	private AuthenticationService svc;
 	// TODO: Task 2, Task 3, Task 4, Task 6
 
 	//Getting the landingpage
@@ -48,19 +48,19 @@ public class FrontController {
 		}
 
 		//Check if user is on the disabled list
-		if (authenticationService.isLocked(user.getUsername())) {
+		if (svc.isLocked(user.getUsername())) {
 			return "view2";
 		}
 
 		//try catch block to countercheck number of login attempts.
 		//Catch block used to generate different view for different scenarios i.e. failed attempts == 3
 		try {
-		authenticationService.authenticate(user.getUsername(), user.getPassword());} 
+		svc.authenticate(user.getUsername(), user.getPassword());} 
 		catch(Exception e) {
 			user.addAttempt();
 			//Creating new Captcha after failed attempt
 			if (user.getLoginAttempts() == 3) {
-				authenticationService.disableUser(user.getUsername());
+				svc.disableUser(user.getUsername());
 				model.addAttribute("user", user);
 				return "view2";
 			}

@@ -33,6 +33,8 @@ public class AuthenticationService {
 		RestTemplate template = new RestTemplate();
 		String url = UriComponentsBuilder
 				.fromUriString(railwayURL)
+				.path("/api")
+				.path("/authenticate")
 				.toUriString();
 
 		JsonObject userJson = Json.createObjectBuilder()
