@@ -17,8 +17,10 @@ import vttp2023.batch3.ssf.frontcontroller.respositories.AuthenticationRepositor
 @Service
 public class AuthenticationService {
 
-	@Value("${RAILWAY_URL}")
-	private String railwayURL;
+	// @Value("${RAILWAY_URL}")
+	// private String railwayURL;
+	
+	private String railwayURL = "http://authservice-production-e8b2.up.railway.app";
 
 	@Autowired
 	private AuthenticationRepository repo;	

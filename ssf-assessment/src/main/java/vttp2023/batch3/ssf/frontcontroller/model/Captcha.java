@@ -7,7 +7,9 @@ public class Captcha {
     
     private String captchaString;
     private double answer;
+    private double input;
     private String operationString;
+    private boolean verify;
 
     public Captcha() {
         Random rnd = new Random();
@@ -29,8 +31,6 @@ public class Captcha {
                 this.answer = number1 * number2;
                 this.operationString = "What is " + number1 + "* " + number2 + "?";
         
-        
-        
         }
     }
 
@@ -51,6 +51,36 @@ public class Captcha {
     public void setAnswer(int answer) {
         this.answer = answer;
     }
+
+    public void setAnswer(double answer) {
+        this.answer = answer;
+    }
+
+    public double getInput() {
+        return input;
+    }
+
+    public void setInput(double input) {
+        this.input = input;
+    }
+
+    public String getOperationString() {
+        return operationString;
+    }
+
+    public void setOperationString(String operationString) {
+        this.operationString = operationString;
+    }
+
+    public boolean isCorrect() {
+        if (this.getInput() == this.getAnswer()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    
 
     
 }

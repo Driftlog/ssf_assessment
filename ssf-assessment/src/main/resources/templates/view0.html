@@ -43,15 +43,27 @@
 				</td>
 			</tr>
 			<tr>
+				<td>
+					<div data-th-if="${#strings.isEmpty(user.getCaptchaBody)}">
+					<label for="captcha"><span data-th-text="${user.getCaptchaBody()}"></span>></label>
+				</td>
+				<td>
+					<input type="text" id="answer" size="30" 
+							placeholder="Answer" data-th-field="*{password}">
+
+				</td>
+			</div>
+			</tr>
+			<tr>
 				<td></td>
 				<td>
-					<button type="submit">Login</button>
+					<button type="submit" formaction="/login" formmethod="post">Login</button>
 				</td>
 			</tr>
 		</table>
 	</form>
-	<form action = "#" method="post" data-th-action="@{/}" data-th-object="{captcha}">
-		
+	<
+
 	</form>
 	</body>
 </html>

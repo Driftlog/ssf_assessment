@@ -13,9 +13,9 @@ public class ProtectedController {
 	// TODO Task 5
 	// Write a controller to protect resources rooted under /protected
 
-	@GetMapping(path="{/resourceID}")
-	public String getResource(@PathVariable String resourceID, @RequestParam boolean authenticate) {
+	// @GetMapping(path="{/resourceID}")
+	// public String getResource(@PathVariable String resourceID, @RequestParam boolean authenticate) {
 
-	}
+	// }
 
 }

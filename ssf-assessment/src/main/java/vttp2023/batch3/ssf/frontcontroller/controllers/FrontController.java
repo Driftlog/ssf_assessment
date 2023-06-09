@@ -22,9 +22,10 @@ public class FrontController {
 
 	//Getting the landingpage
 	@GetMapping(path="/")
-	public String landingPage(HttpSession session) {
+	public String landingPage(HttpSession session, Model model) {
 		User user = new User();
 		session.setAttribute("user", user);
+		model.addAttribute("user", user);
 		return "view0";
 	}
 	
@@ -37,6 +38,18 @@ public class FrontController {
 			return "view0";
 		}
 
+		//Check if Captcha is correct if there is a captcha i.e. failed one or more attempts
+		if (user.getLoginAttempts() > 0 && !user.isCorrect()) {
+			user.addAttempt();
+			user.setCaptcha(new Captcha());
+			return "view0";
+		}
+
+		//Check if user is on the disabled list
+		if (authenticationService.isLocked(user.getUsername())) {
+			return "view2";
+		}
+
 		//try catch block to countercheck number of login attempts.
 		//Catch block used to generate different view for different scenarios i.e. failed attempts == 3
 		try {
@@ -44,10 +57,11 @@ public class FrontController {
 		catch(Exception e) {
 			user.addAttempt();
 			//Creating new Captcha after failed attempt
-			user.setCaptcha(new Captcha());
 			if (user.getLoginAttempts() == 3) {
+				authenticationService.disableUser(user.getUsername());
 				return "view2";
 			}
+			user.setCaptcha(new Captcha());
 			e.printStackTrace();
 			return "view0";
 		}

@@ -78,6 +78,9 @@ public class User {
         this.captcha = captcha;
     }
 
+    public boolean isCorrect() {
+        return this.getCaptcha().isCorrect();
+    }
 
 
     
