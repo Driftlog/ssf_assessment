@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -30,8 +31,10 @@ public class FrontController {
 	}
 	
 	@PostMapping(path="/login",
-				consumes = " application/x-www-form-urlencoded")
-	public String login(@Valid User user, BindingResult result, Model model) {
+				consumes = "application/x-www-form-urlencoded")
+	public String login(@Valid User user, BindingResult result, Model model, HttpSession session, RedirectAttributes rdrAttr) {
+
+		User previousUser = (User) session.getAttribute("user");
 
 		//display any errors with validation
 		if(result.hasErrors()) {
@@ -41,7 +44,6 @@ public class FrontController {
 		//Check if Captcha is correct if there is a captcha i.e. failed one or more attempts
 		if (user.getLoginAttempts() > 0 && !user.isCorrect()) {
 			user.addAttempt();
-			user.setCaptcha(new Captcha());
 			return "view0";
 		}
 
@@ -59,13 +61,17 @@ public class FrontController {
 			//Creating new Captcha after failed attempt
 			if (user.getLoginAttempts() == 3) {
 				authenticationService.disableUser(user.getUsername());
+				model.addAttribute("user", user);
 				return "view2";
 			}
-			user.setCaptcha(new Captcha());
 			e.printStackTrace();
 			return "view0";
 		}
 
+		//set user to be authenticated
+		user.authenticated();
+		session.setAttribute("user", user);
+		rdrAttr.addFlashAttribute("user", user);
 		return "view1";
 	}
 

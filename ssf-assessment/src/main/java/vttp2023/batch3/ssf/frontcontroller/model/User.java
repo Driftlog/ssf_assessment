@@ -24,6 +24,8 @@ public class User {
 
     private Captcha captcha;
 
+    private boolean authenticate= false;
+
     public void addAttempt() {
         this.loginAttempts++;
     }
@@ -82,9 +84,16 @@ public class User {
         return this.getCaptcha().isCorrect();
     }
 
-
+    public void authenticated() {
+        this.authenticate = true;
+    }
     
-    
+    public boolean isAuthenticated() {
+        return this.authenticate;
+    }
 
+    public String getInput() {
+        return this.getCaptcha().getInput();    
+    }
     
 }

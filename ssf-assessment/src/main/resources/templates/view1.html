@@ -6,7 +6,7 @@
 		<title>Top Secret</title>
 	</head>
 	<body>
-
+	<form data-th-object="${user}">
 		<h2>Top Secret</h2>
 
 		<div style="margin-bottom: 10px;">
@@ -14,8 +14,9 @@
 		</div>
 
 		<div>
-			<button type="submit" formmethod="get" data-th-href="@{/}">Logout</button>
+			<button type="reset" formmethod="get" data-th-href="@{/}">Logout</button>
 		</div>
-		
+	
+	</form>
 	</body>
 </html>

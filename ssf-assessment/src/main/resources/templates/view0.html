@@ -12,7 +12,7 @@
 
 		<h2>Please Login</h2>
 
-		<form action="#" method="post" data-th-action="@{/login}" data-th-object="{user}">
+		<form action="#" method="post" data-th-action="@{/login}" data-th-object="${user}">
 		<table>
 			<tr>
 				<td> 
@@ -44,17 +44,29 @@
 			</tr>
 			<tr>
 				<td>
-					<div data-th-if="${#strings.isEmpty(user.getCaptchaBody)}">
+				<div data-th-if="${user.captcha != null}">
+					<span data-th-object="user.captcha"> 
+					<label for="captcha"><span data-th-text="*{captchaString}"></label>
+					Answer: 
+					<input type="text" id="input" size="30" 
+						placeholder="Answer" data-th-field="*{input}">
+				</span>
+			</div>
+			</td>
+			</tr>
+			
+			<!-- <tr>
+				<td>
+			<div data-th-if="${#strings.isEmpty(user.getCaptchaBody)}">
 					<label for="captcha"><span data-th-text="${user.getCaptchaBody()}"></span>></label>
 				</td>
 				<td>
 					<input type="text" id="answer" size="30" 
-							placeholder="Answer" data-th-field="*{password}">
-
+							placeholder="input" data-th-field="*{input}">
 				</td>
 			</div>
 			</tr>
-			<tr>
+			<tr> -->
 				<td></td>
 				<td>
 					<button type="submit" formaction="/login" formmethod="post">Login</button>
@@ -62,8 +74,6 @@
 			</tr>
 		</table>
 	</form>
-	<
-
 	</form>
 	</body>
 </html>

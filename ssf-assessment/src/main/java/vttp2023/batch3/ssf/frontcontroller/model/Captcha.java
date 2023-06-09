@@ -7,9 +7,8 @@ public class Captcha {
     
     private String captchaString;
     private double answer;
-    private double input;
+    private String input;
     private String operationString;
-    private boolean verify;
 
     public Captcha() {
         Random rnd = new Random();
@@ -56,11 +55,11 @@ public class Captcha {
         this.answer = answer;
     }
 
-    public double getInput() {
+    public String getInput() {
         return input;
     }
 
-    public void setInput(double input) {
+    public void setInput(String input) {
         this.input = input;
     }
 
@@ -73,7 +72,7 @@ public class Captcha {
     }
 
     public boolean isCorrect() {
-        if (this.getInput() == this.getAnswer()) {
+        if (Double.valueOf(this.getInput()) == this.getAnswer()) {
             return true;
         }
 
